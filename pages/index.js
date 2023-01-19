@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { StudentsContext } from "../context/StudentsApp";
 import Navbar from "../components/Navbar";
+import StudentsTable from "../components/StudentsTable";
 const Home = () => {
   const [data, setData] = useState("");
   const { connectWallet, addStudent, currentAccount, studentsList } =
@@ -15,7 +16,8 @@ const Home = () => {
         <div className="row">
           <div className="col-sm-12">
             <Navbar />
-            {
+            <StudentsTable />
+            {/* {
               <>
                 {!currentAccount ? (
                   <>
@@ -75,7 +77,7 @@ const Home = () => {
                   </>
                 )}
               </>
-            }
+            } */}
           </div>
         </div>
       </div>

@@ -6,12 +6,14 @@ import { StudentsContext } from "../context/StudentsApp";
 const Navbar = () => {
   const { connectWallet, addStudent, currentAccount, studentsList } =
     useContext(StudentsContext);
+  const disconnect = () => {
+    // window.ethereum.close()
+    window.ethereum.autoRefreshOnNetworkChange = false;
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark w-100">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Student Management System
-        </a>
+        <a className="navbar-brand">Student Management System</a>
         <button
           className="navbar-toggler"
           type="button"
@@ -25,10 +27,29 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Teachers
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Students
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">
+                Login
+              </a>
+            </li>
             <li className="nav-item dropdown">
               <a
-                className="nav-link dropdown-toggle"
-                href="#"
+                className="nav-link dropdown-toggle text-center"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -36,16 +57,23 @@ const Navbar = () => {
               >
                 <FontAwesomeIcon icon={faUser} />
                 {currentAccount ? (
-                  <label className="white ms-3">{currentAccount.slice(0, 15)}</label>
+                  <label className="white ms-3">
+                    {currentAccount.slice(0, 15)}
+                  </label>
                 ) : null}
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="javascript:void(0)">
+                  <a className="dropdown-item text-center">
                     {currentAccount ? (
-                      <button className="white">Disconnect</button>
+                      <button className="white text-center" disabled>
+                        {currentAccount}
+                      </button>
                     ) : (
-                      <button className="white" onClick={() => connectWallet()}>
+                      <button
+                        className="white text-center"
+                        onClick={() => connectWallet()}
+                      >
                         Connect Wallet
                       </button>
                     )}

@@ -42,6 +42,9 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
+      console.log('====================================');
+      console.log(contract);
+      console.log('====================================');
       const createList = await contract.addStudent(data)
       createList.wait();
       if(createList){

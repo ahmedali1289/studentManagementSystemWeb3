@@ -32,6 +32,8 @@ body{
 .dropdown-item button{
   background: none;
   border: none;
+  width: 100%;
+  overflow: hidden;
 }
 .dropdown-item:hover, .dropdown-item:focus {  
   background-color: #e9ecef;
