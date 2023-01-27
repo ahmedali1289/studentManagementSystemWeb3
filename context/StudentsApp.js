@@ -36,16 +36,14 @@ export const StudentsProvider = ({ children }) => {
     }
   };
   const addStudent = async (data) => {
+    console.log(data,"add");
     try {
       const web3modal = new Web3Modal();
       const connection = await web3modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      console.log('====================================');
-      console.log(contract);
-      console.log('====================================');
-      const createList = await contract.addStudent(data)
+      const createList = await contract.addStudent(data.name,data.studentaddress, data.age, data.number)
       createList.wait();
       if(createList){
         setStudentAdd(true)
@@ -75,7 +73,8 @@ export const StudentsProvider = ({ children }) => {
         connectWallet,
         addStudent,
         currentAccount,
-        studentsList
+        studentsList,
+        studentAdd
       }}
     >
       {children}

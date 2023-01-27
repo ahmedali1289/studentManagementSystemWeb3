@@ -1,10 +1,5 @@
 [
 	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -33,6 +28,21 @@
 				"internalType": "string",
 				"name": "studentName",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_studentAddress",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "studentAge",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "studentNumber",
+				"type": "uint256"
 			}
 		],
 		"name": "addStudent",
@@ -59,6 +69,34 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_studentId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_attendance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "courseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "markAttendance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
 		"inputs": [],
 		"name": "getAllStudents",
 		"outputs": [
@@ -68,6 +106,21 @@
 						"internalType": "string",
 						"name": "name",
 						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "studentaddress",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "number",
+						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
@@ -143,6 +196,21 @@
 				"type": "string"
 			},
 			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
 				"internalType": "string[]",
 				"name": "",
 				"type": "string[]"
@@ -159,29 +227,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_studentId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_attendance",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "courseIndex",
-				"type": "uint256"
-			}
-		],
-		"name": "markAttendance",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]

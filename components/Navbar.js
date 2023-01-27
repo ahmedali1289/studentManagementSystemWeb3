@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import the icons you need
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { StudentsContext } from "../context/StudentsApp";
+import Link from "next/link";
 const Navbar = () => {
   const { connectWallet, addStudent, currentAccount, studentsList } =
     useContext(StudentsContext);
@@ -11,6 +12,7 @@ const Navbar = () => {
     window.ethereum.autoRefreshOnNetworkChange = false;
   };
   return (
+    <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark w-100">
       <div className="container-fluid">
         <a className="navbar-brand">Student Management System</a>
@@ -28,24 +30,13 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
+              <Link className="nav-link active" href="/">Home</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Teachers
-              </a>
+              <Link className="nav-link active" href="/teachers">Teachers</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Students
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Login
-              </a>
+              <Link className="nav-link active" href="/students">Students</Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -56,11 +47,6 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <FontAwesomeIcon icon={faUser} />
-                {currentAccount ? (
-                  <label className="white ms-3">
-                    {currentAccount.slice(0, 15)}
-                  </label>
-                ) : null}
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -85,6 +71,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </div>
   );
 };
 

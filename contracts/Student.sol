@@ -5,6 +5,9 @@ contract StudentContract {
     StudentData[] students;
     struct StudentData {
         string name;
+        string studentaddress;
+        uint256 age;
+        uint256 number;
         uint256 id;
         string[] courses;
         uint256[] grades;
@@ -16,12 +19,15 @@ contract StudentContract {
         admin = msg.sender;
     }
 
-    function addStudent(string memory studentName) public {
+    function addStudent(string memory studentName, string memory _studentAddress,uint studentAge,uint studentNumber) public {
         // require(msg.sender == admin);
         studentId++;
         StudentData memory studentData = StudentData({
             id: studentId,
             name: studentName,
+            studentaddress: _studentAddress,
+            age: studentAge,
+            number: studentNumber,
             courses: new string[](0),
             grades: new uint256[](0),
             attendance: new uint256[](0)
@@ -78,6 +84,9 @@ contract StudentContract {
         returns (
             uint256,
             string memory,
+            string memory,
+            uint256,
+            uint256,
             string[] memory,
             uint256[] memory,
             uint256[] memory
@@ -88,6 +97,9 @@ contract StudentContract {
                 return (
                     students[i].id,
                     students[i].name,
+                    students[i].studentaddress,
+                    students[i].age,
+                    students[i].number,
                     students[i].courses,
                     students[i].grades,
                     students[i].attendance

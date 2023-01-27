@@ -1,59 +1,252 @@
-body{
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	background-image: linear-gradient(-225deg,#3498db 0,#9b59b6 29%,#e74c3c 67%,#f1c40f 100%);
-	background-size: 500% 500%;
-	animation: bg 8s linear infinite;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: linear-gradient(
+    -225deg,
+    #3498db 0,
+    #9b59b6 29%,
+    #e74c3c 67%,
+    #f1c40f 100%
+  );
+  background-size: 500% 500%;
+  animation: bg 8s linear infinite;
   width: 100%;
 }
-.dropdown-menu{
-  left: 50% !important;
+.cstmContainer{
+  height: 80vh;
+  overflow-y: auto;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f12d;
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: linear-gradient(
+    -225deg,
+    #3498dbb2 0,
+    #9c59b6a1 29%,
+    #e74d3ca2 67%,
+    #3498dbb2 100%
+  );
+  background-size: 100% 100%;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(
+    -225deg,
+    #3498db 0,
+    #9b59b6 29%,
+    #e74c3c 67%,
+    #3498db 100%
+  );
+  background-size: 100% 100%;
+}
+.dropdown-menu {
+  right: 50% !important;
   transform: translateX(-50%);
   background: none;
   border: none;
 }
 .dropdown-item {
-  padding:10px 15px;
+  padding: 10px 15px;
   border: 1px solid #0000002d;
   margin: 5px auto;
   overflow: hidden;
   width: 80%;
 }
-.dropdown-item label{
+.dropdown-item label {
   width: 100%;
   overflow: hidden;
 }
 .dropdown-item label,
-.dropdown-item button{
+.dropdown-item button {
   margin: 0;
   padding: 0;
 }
-.dropdown-item button{
+.dropdown-item button {
   background: none;
   border: none;
   width: 100%;
   overflow: hidden;
 }
-.dropdown-item:hover, .dropdown-item:focus {  
+.dropdown-item:hover,
+.dropdown-item:focus {
   background-color: #e9ecef;
 }
-.dropdown-item:hover label, .dropdown-item:focus label,
-.dropdown-item:hover button, .dropdown-item:focus button{
+.dropdown-item:hover label,
+.dropdown-item:focus label,
+.dropdown-item:hover button,
+.dropdown-item:focus button {
   color: #000;
 }
 @keyframes bg {
-	50%{
-		background-position: 100% 100%;
-	}
+  50% {
+    background-position: 100% 100%;
+  }
 }
 /* index css */
-.white{
-  color:#fff
+.white {
+  color: #fff;
 }
-.black{
-  color:#000
+.black {
+  color: #000;
 }
-.mainHeading{
+.mainHeading {
   font-family: sans-serif;
+}
+.addStudentButton {
+  background: none;
+  border: none;
+  color: #fff;
+}
+.inputContainer {
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+.formInputLabels {
+  transform: translate(10px, -5px);
+}
+.formInputFields {
+  background: none;
+  border-width: 0;
+  outline: none;
+  padding: 0 10px;
+  transform: translateY(-5px);
+  color: #fff;
+}
+.formInputFields::placeholder {
+  color: #dddddd;
+}
+.marginHorizontalAuto {
+  margin-left: auto;
+  margin-right: auto;
+}
+.cstmButton {
+  position: relative;
+  display: inline-block;
+  padding: 5px 50px;
+  border-radius: 4px;
+  color: #03e9f4;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  margin: 25px;
+  font-family: "Roboto", sans-serif;
+  filter: hue-rotate(0deg);
+  transition: all 0.1s linear;
+}
+.cstmButton span {
+  position: absolute;
+  display: block;
+}
+.cstmButton {
+  border: 1px solid transparent;
+}
+.cstmButton span:nth-child(1) {
+  filter: hue-rotate(0deg);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #3a86ff);
+  animation: cstmButtonanimate1 3s ease-in-out infinite;
+}
+.cstmButton span:nth-child(2) {
+  filter: hue-rotate(60deg);
+  top: -100%;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #3a86ff);
+  animation: cstmButtonanimate2 3s ease-in-out infinite;
+  animation-delay: 0.25s;
+}
+.cstmButton span:nth-child(3) {
+  filter: hue-rotate(120deg);
+  bottom: 0;
+  right: 0;
+  width: 100%;
+
+  background: linear-gradient(270deg, transparent, #3a86ff);
+  animation: cstmButtonanimate3 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+.cstmButton span:nth-child(4) {
+  filter: hue-rotate(300deg);
+  bottom: -100%;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #3a86ff);
+  animation: cstmButtonanimate4 3s ease-in-out infinite;
+  animation-delay: 0.75s;
+}
+.table-responsive {
+  overflow-x: hidden !important;
+}
+.mdb-datatable-filter input{
+  background: #ffffffa2 !important;
+  outline: none;
+  border: none !important;
+}
+.mdb-datatable-filter input:focus{
+  border: none;
+}
+.dataTables_length .custom-select{
+  background: #ffffffa2 !important;
+  margin-bottom: 1rem;
+}
+.table > tbody > tr > * {
+  color: #ffffff;
+  text-align: center;
+  text-transform: capitalize;
+}
+@keyframes cstmButtonanimate1 {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+@keyframes cstmButtonanimate2 {
+  0% {
+    top: -100%;
+  }
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+@keyframes cstmButtonanimate3 {
+  0% {
+    right: -100%;
+    height: 3px;
+  }
+  50%,
+  100% {
+    height: 2px;
+    right: 100%;
+  }
+}
+@keyframes cstmButtonanimate4 {
+  0% {
+    bottom: -100%;
+  }
+  50%,
+  100% {
+    bottom: 100%;
+  }
 }
