@@ -209,8 +209,10 @@ body {
 }
 .table > tbody > tr > * {
   color: #ffffff;
-  text-align: center;
   text-transform: capitalize;
+}
+thead, tbody, tfoot, tr, td, th{
+  text-align: center;
 }
 @keyframes cstmButtonanimate1 {
   0% {

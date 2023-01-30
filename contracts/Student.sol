@@ -82,27 +82,13 @@ contract StudentContract {
         public
         view
         returns (
-            uint256,
-            string memory,
-            string memory,
-            uint256,
-            uint256,
-            string[] memory,
-            uint256[] memory,
-            uint256[] memory
+            StudentData[] memory
         )
     {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
                 return (
-                    students[i].id,
-                    students[i].name,
-                    students[i].studentaddress,
-                    students[i].age,
-                    students[i].number,
-                    students[i].courses,
-                    students[i].grades,
-                    students[i].attendance
+                    students
                 );
             }
         }

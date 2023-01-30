@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import Table from "../components/Table";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { StudentsContext } from "../context/StudentsApp";
-import Heading from "../components/Heading";
+import Table from '../../components/Table'
+import Heading from "../../components/Heading";
+import { StudentsContext } from "../../context/StudentsApp";
 function Students() {
   const { studentsList } = useContext(StudentsContext);
   return (
@@ -20,7 +20,7 @@ function Students() {
         </div>
         <div className="col-sm-12 d-flex justify-content-end">
           <button className="addStudentButton">
-            <Link className="nav-link active" href="/addStudent">
+            <Link className="nav-link active" href="/students/addStudent">
               <FontAwesomeIcon icon={faPlus} /> Add Student
             </Link>
           </button>

@@ -9,6 +9,7 @@ export const StudentsProvider = ({ children }) => {
   const [studentAdd, setStudentAdd] = useState(false)
   const [studentsList, setStudentsList] = useState([])
   const [currentAccount, setCurrentAccount] = useState("");
+  const [studentById, setStudentById] = useState(null);
   useEffect(() => {
     getStudents()
   }, [studentAdd])
@@ -67,6 +68,19 @@ export const StudentsProvider = ({ children }) => {
       console.log(error,"errors");
     }
   };
+  const getStudent = async (id) => {
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const student = await contract.getStudent(id)
+      setStudentById(student)
+    } catch (error) {
+      console.log(error,"errors");
+    }
+  };
   return (
     <StudentsContext.Provider
       value={{
@@ -74,7 +88,9 @@ export const StudentsProvider = ({ children }) => {
         addStudent,
         currentAccount,
         studentsList,
-        studentAdd
+        studentAdd,
+        getStudent,
+        studentById
       }}
     >
       {children}

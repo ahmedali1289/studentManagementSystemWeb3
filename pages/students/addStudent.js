@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
-import Button from "../components/Button";
-import Heading from "../components/Heading";
-import InputFeilds from "../components/InputFeilds";
-import checkForEmptyState from "../context/helperFunctions";
-import { StudentsContext } from "../context/StudentsApp";
+import Button from "../../components/Button";
+import Heading from "../../components/Heading";
+import InputFeilds from "../../components/InputFeilds";
+import { StudentsContext } from "../../context/StudentsApp";
 import { useForm } from "react-hook-form";
+import checkForEmptyState from "../../context/helperFunctions";
 function AddStudent() {
   const [name, setName] = useState(null);
   const [address, setAddress] = useState(null);

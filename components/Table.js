@@ -1,9 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StudentsContext } from "../context/StudentsApp";
-import { faEye, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEdit, faBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MDBDataTable } from "mdbreact";
+import { useRouter } from "next/router";
+import ModalComponent from "./Modal";
+import { Button } from "react-bootstrap";
 const Table = ({ list }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState(null);
+  const router = useRouter();
   const data = {
     columns: [
       {
@@ -45,40 +51,55 @@ const Table = ({ list }) => {
     ],
     rows: [],
   };
-  const Action = (id) =>{
+  const Action = (id) => {
     return (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div
-            style={{
-              cursor: "pointer",
-              color: "#fff",
-              width:"100%",
-              display:'flex',
-              justifyContent:'center',
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div
+          style={{
+            cursor: "pointer",
+            color: "#fff",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          // onClick={() => history.push(`/students/student/${id}`)}
+        >
+          <FontAwesomeIcon
+            icon={faBook}
+            onClick={() => {
+              setShowModal(true), setId(id);
             }}
-            onClick={() => console.log(id)}
-          >
-            <FontAwesomeIcon icon={faEdit} className='me-3'/>
-            <FontAwesomeIcon icon={faEye} />
-          </div>
+            className="me-3"
+          />
+          <FontAwesomeIcon icon={faEdit} className="me-3" />
+          <FontAwesomeIcon
+            onClick={() =>
+              router.push({ pathname: "/students/student", query: { id: id } })
+            }
+            icon={faEye}
+          />
         </div>
-      );
-  }
-  useEffect(() => {
-    list?.map((e, index) => {
-      data.rows?.push({
-        id: e?.id?.toString(),
-        name: e?.name,
-        address: e?.studentaddress,
-        age: e?.age?.toString(),
-        number: e?.number?.toString(),
-        actions:Action(e?.id?.toString())
-      });
+      </div>
+    );
+  };
+  list?.map((e, index) => {
+    data.rows?.push({
+      id: e?.id?.toString(),
+      name: e?.name,
+      address: e?.studentaddress,
+      age: e?.age?.toString(),
+      number: e?.number?.toString(),
+      actions: Action(e?.id?.toString()),
     });
-  }, [list]);
+  });
   return (
     <div className="table-responsive">
       <MDBDataTable responsive bordered data={data} />
+      <ModalComponent
+        showModal={showModal}
+        setShowModal={setShowModal}
+        id={id}
+      />
     </div>
   );
 };

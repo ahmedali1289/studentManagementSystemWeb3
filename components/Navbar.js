@@ -36,7 +36,7 @@ const Navbar = () => {
               <Link className="nav-link active" href="/teachers">Teachers</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link active" href="/students">Students</Link>
+              <Link className="nav-link active" href="/students/allStudents">Students</Link>
             </li>
             <li className="nav-item dropdown">
               <a
