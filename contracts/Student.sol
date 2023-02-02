@@ -2,6 +2,7 @@ pragma solidity ^0.8.0;
 
 contract StudentContract {
     address admin;
+    Course[] courses;
     StudentData[] students;
     struct StudentData {
         string name;
@@ -9,17 +10,44 @@ contract StudentContract {
         uint256 age;
         uint256 number;
         uint256 id;
-        string[] courses;
+        Course[] courses;
         uint256[] grades;
         uint256[] attendance;
+        uint256 balance;
+    }
+    struct Course {
+        uint256 id;
+        string name;
+        uint256 fee;
     }
     uint256 studentId;
+    uint256 courseId;
 
     constructor() public {
         admin = msg.sender;
     }
 
-    function addStudent(string memory studentName, string memory _studentAddress,uint studentAge,uint studentNumber) public {
+    function addCourse(string memory courseName, uint256 courseFee) public {
+        courseId++;
+        require(msg.sender == admin);
+        Course memory course = Course({
+            id: courseId,
+            name: courseName,
+            fee: courseFee
+        });
+        courses.push(course);
+    }
+
+    function viewCourses() public view returns (Course[] memory) {
+        return (courses);
+    }
+
+    function addStudent(
+        string memory studentName,
+        string memory _studentAddress,
+        uint256 studentAge,
+        uint256 studentNumber
+    ) public {
         // require(msg.sender == admin);
         studentId++;
         StudentData memory studentData = StudentData({
@@ -28,20 +56,20 @@ contract StudentContract {
             studentaddress: _studentAddress,
             age: studentAge,
             number: studentNumber,
-            courses: new string[](0),
+            courses: new Course[](0),
             grades: new uint256[](0),
-            attendance: new uint256[](0)
+            attendance: new uint256[](0),
+            balance: 0
         });
         students.push(studentData);
     }
 
-    function assignCourse(uint256 _studentId, string memory course) public {
+    function assignCourse(uint256 _studentId, uint256 _courseIndex) public {
         require(msg.sender == admin);
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == _studentId) {
-                students[i].courses.push(course);
-                students[i].grades.push(0);
-                students[i].attendance.push(0);
+                students[i].courses.push(courses[_courseIndex]);
+                // students[i].fees.push(courses[_courseIndex].fees);
             }
         }
     }
@@ -81,9 +109,7 @@ contract StudentContract {
     function getStudent(uint256 studentId)
         public
         view
-        returns (
-            StudentData memory
-        )
+        returns (StudentData memory)
     {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
@@ -95,7 +121,7 @@ contract StudentContract {
     function getAssignedCoursesWithGrades(uint256 studentId)
         public
         view
-        returns (string[] memory, uint256[] memory)
+        returns (Course[] memory, uint256[] memory)
     {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
@@ -103,10 +129,11 @@ contract StudentContract {
             }
         }
     }
+
     function getAssignedCourses(uint256 studentId)
         public
         view
-        returns (string[] memory, uint256)
+        returns (Course[] memory, uint256)
     {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
