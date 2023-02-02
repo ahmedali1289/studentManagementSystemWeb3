@@ -7,35 +7,43 @@ import { StudentsContext } from "../../context/StudentsApp";
 import { useForm } from "react-hook-form";
 import checkForEmptyState from "../../context/helperFunctions";
 function AddStudent() {
-  const [name, setName] = useState(null);
-  const [address, setAddress] = useState(null);
-  const [age, setAge] = useState(null);
-  const [number, setNumber] = useState(null);
-  const router = useRouter()
-  
-  const { addStudent, currentAccount, studentsList, studentAdd } = useContext(StudentsContext);
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [age, setAge] = useState('');
+  const [number, setNumber] = useState('');
+  const router = useRouter();
+  const { addStudent, currentAccount, studentsList, studentAdd } =
+    useContext(StudentsContext);
   useEffect(() => {
-    setName('')
-    setAddress('')
-    setAge('')
-    setNumber('')
-    if(studentAdd){
-      router.back()
+    setName("");
+    setAddress("");
+    setAge("");
+    setNumber("");
+    if (studentAdd) {
+      router.back();
     }
   }, [studentsList, studentAdd]);
 
   const addStudentFunc = () => {
-    if(currentAccount){
-      if(name&&address&&age&&number){
-        const data = {name:name,studentaddress:address, age:age, number:number}
-        addStudent(data)
+    if (currentAccount) {
+      if (name && address && age && number) {
+        const data = {
+          name: name,
+          studentaddress: address,
+          age: age,
+          number: number,
+        };
+        addStudent(data);
+      } else {
+        checkForEmptyState([
+          { name: "name", value: name },
+          { name: "address", value: address },
+          { name: "age", value: age },
+          { name: "number", value: number },
+        ]);
       }
-      else{
-        checkForEmptyState([{name:"name",value:name},{name:"address",value:address},{name:"age",value:age},{name:"number",value:number}])
-      }
-    }
-    else{
-      alert("connect your wallet account")
+    } else {
+      alert("connect your wallet account");
     }
   };
   return (
@@ -51,6 +59,7 @@ function AddStudent() {
         </div>
         <div className="col-sm-12 mt-3 mb-3">
           <InputFeilds
+            containerWidth={"w-50"}
             label={"Name"}
             labelColor={"white"}
             placeholder={null}
@@ -61,6 +70,7 @@ function AddStudent() {
         </div>
         <div className="col-sm-12 mt-3 mb-3">
           <InputFeilds
+            containerWidth={"w-50"}
             label={"Address"}
             labelColor={"white"}
             placeholder={null}
@@ -71,6 +81,7 @@ function AddStudent() {
         </div>
         <div className="col-sm-12 mt-3 mb-3">
           <InputFeilds
+            containerWidth={"w-50"}
             label={"Age"}
             labelColor={"white"}
             placeholder={null}
@@ -81,6 +92,7 @@ function AddStudent() {
         </div>
         <div className="col-sm-12 mt-3 mb-3">
           <InputFeilds
+            containerWidth={"w-50"}
             label={"Number"}
             labelColor={"white"}
             placeholder={null}

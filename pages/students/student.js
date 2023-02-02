@@ -5,7 +5,6 @@ import Label from "../../components/Label";
 import { StudentsContext } from "../../context/StudentsApp";
 function student() {
   const [id, setId] = useState(null);
-  const [user, setUser] = useState(null);
   const { getStudent, studentById } = useContext(StudentsContext);
   const router = useRouter();
   useEffect(() => {
@@ -18,23 +17,7 @@ function student() {
       getStudent(id);
     } else return;
   }, [id]);
-  useEffect(() => {
-    // setUser(studentById);
-    studentById?.map((student) => {
-      setUser({
-        name: student?.name,
-        age: student?.age.toString(),
-        number: student?.number.toString(),
-        address: student?.studentaddress,
-        courses: student?.courses,
-        grades: student?.grades,
-        attendance: student?.attendance,
-      });
-    });
-  }, [studentById]);
-  console.log("====================================");
-  console.log(user);
-  console.log("====================================");
+  useEffect(() => {}, [studentById]);
 
   return (
     <div className="container cstmContainer">
@@ -51,7 +34,7 @@ function student() {
           <Label classes={"me-3"} text={"Name:"} color={"#fff"} size={"14px"} />
           <Label
             classes={"ml-5"}
-            text={user?.name ? user?.name : "N/A"}
+            text={studentById?.name ? studentById?.name : "N/A"}
             color={"#fff"}
             size={"14px"}
           />
@@ -60,7 +43,11 @@ function student() {
           <Label classes={"me-3"} text={"Age:"} color={"#fff"} size={"14px"} />
           <Label
             classes={"ml-5"}
-            text={user?.age ? user?.age : "N/A"}
+            text={
+              studentById?.age?.toString()
+                ? studentById?.age?.toString()
+                : "N/A"
+            }
             color={"#fff"}
             size={"14px"}
           />
@@ -74,7 +61,9 @@ function student() {
           />
           <Label
             classes={"ml-5"}
-            text={user?.address ? user?.address : 'N/A'}
+            text={
+              studentById?.studentaddress ? studentById?.studentaddress : "N/A"
+            }
             color={"#fff"}
             size={"14px"}
           />
@@ -88,7 +77,11 @@ function student() {
           />
           <Label
             classes={"ml-5"}
-            text={user?.number ? user?.number : "N/A"}
+            text={
+              studentById?.number?.toString()
+                ? studentById?.number?.toString()
+                : "N/A"
+            }
             color={"#fff"}
             size={"14px"}
           />
@@ -100,12 +93,25 @@ function student() {
             color={"#fff"}
             size={"14px"}
           />
-          <Label
-            classes={"ml-5"}
-            text={user?.courses?.length ? user?.courses : "N/A"}
-            color={"#fff"}
-            size={"14px"}
-          />
+          {studentById?.courses?.length ? (
+            studentById?.courses?.toString() != 0 ? (
+              studentById?.courses?.map((course, index) => {
+                const comma =
+                  index == studentById?.courses?.length - 1 ? "" : ",";
+                return (
+                  <Label
+                    key={index}
+                    classes={"ml-5"}
+                    text={course + comma}
+                    color={"#fff"}
+                    size={"14px"}
+                  />
+                );
+              })
+            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          ) : (
+            <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          )}
         </div>
         <div className="col-sm-6 d-flex justify-content-start mt-5">
           <Label
@@ -114,12 +120,25 @@ function student() {
             color={"#fff"}
             size={"14px"}
           />
-          <Label
-            classes={"ml-5"}
-            text={user?.grades?.length ? user?.grades : "N/A"}
-            color={"#fff"}
-            size={"14px"}
-          />
+          {studentById?.grades?.length ? (
+            studentById?.grades?.toString() != 0 ? (
+              studentById?.grades?.map((grade, index) => {
+                const comma =
+                  index == studentById?.courses?.length - 1 ? "" : ",";
+                return (
+                  <Label
+                    key={index}
+                    classes={"ml-5"}
+                    text={grade?.toString() + comma}
+                    color={"#fff"}
+                    size={"14px"}
+                  />
+                );
+              })
+            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          ) : (
+            <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          )}
         </div>
         <div className="col-sm-6 d-flex justify-content-start mt-5">
           <Label
@@ -128,12 +147,25 @@ function student() {
             color={"#fff"}
             size={"14px"}
           />
-          <Label
-            classes={"ml-5"}
-            text={user?.attendance?.length ? user?.attendance : "N/A"}
-            color={"#fff"}
-            size={"14px"}
-          />
+          {studentById?.attendance?.length ? (
+            studentById?.attendance?.toString() != 0 ? (
+              studentById?.attendance?.map((attend, index) => {
+                const comma =
+                  index == studentById?.courses?.length - 1 ? "" : ",";
+                return (
+                  <Label
+                    key={index}
+                    classes={"ml-5"}
+                    text={attend?.toString() + '%' + comma}
+                    color={"#fff"}
+                    size={"14px"}
+                  />
+                );
+              })
+            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          ) : (
+            <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          )}
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ export const StudentsProvider = ({ children }) => {
   const [studentsList, setStudentsList] = useState([])
   const [currentAccount, setCurrentAccount] = useState("");
   const [studentById, setStudentById] = useState(null);
+  const [assignedCourses, setAssignedCourses] = useState(null);
   useEffect(() => {
     getStudents()
   }, [studentAdd])
@@ -37,7 +38,6 @@ export const StudentsProvider = ({ children }) => {
     }
   };
   const addStudent = async (data) => {
-    console.log(data,"add");
     try {
       const web3modal = new Web3Modal();
       const connection = await web3modal.connect();
@@ -53,7 +53,6 @@ export const StudentsProvider = ({ children }) => {
       console.log(error);
     }
   };
-  
   const getStudents = async () => {
     try {
       const web3modal = new Web3Modal();
@@ -81,6 +80,68 @@ export const StudentsProvider = ({ children }) => {
       console.log(error,"errors");
     }
   };
+  const assignCourse = async (data) => {
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const createList = await contract.assignCourse(data.id,data.courseIndex.value)
+      createList.wait();
+      if(createList){
+        getStudents()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addGradeToCourse = async (data) => {
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const createList = await contract.addGrades(data.id,data.grade,data.courseIndex)
+      createList.wait();
+      if(createList){
+        getStudents()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const markAttendanceToAssignedCourses = async (data) => {
+    console.log(data);
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const createList = await contract.markAttendance(data.id,data.attendance,data.courseIndex)
+      createList.wait();
+      if(createList){
+        getStudents()
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAssignCourses = async (id) => {
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const courses = await contract.getAssignedCourses(id)
+      setAssignedCourses(courses)
+    } catch (error) {
+      console.log(error,"errors");
+    }
+  };
   return (
     <StudentsContext.Provider
       value={{
@@ -90,7 +151,13 @@ export const StudentsProvider = ({ children }) => {
         studentsList,
         studentAdd,
         getStudent,
-        studentById
+        studentById,
+        assignCourse,
+        getAssignCourses,
+        assignedCourses,
+        setAssignedCourses,
+        addGradeToCourse,
+        markAttendanceToAssignedCourses
       }}
     >
       {children}

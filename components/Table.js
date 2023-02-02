@@ -1,14 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StudentsContext } from "../context/StudentsApp";
-import { faEye, faEdit, faBook } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import {
+  faEye,
+  faEdit,
+  faBook,
+  faClipboardUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MDBDataTable } from "mdbreact";
 import { useRouter } from "next/router";
-import ModalComponent from "./Modal";
-import { Button } from "react-bootstrap";
-const Table = ({ list }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [id, setId] = useState(null);
+import { Tooltip as ReactTooltip } from "react-tooltip";
+const Table = ({
+  list,
+  setId,
+  setShowModal,
+  getAssignCourses,
+  setModalType,
+}) => {
   const router = useRouter();
   const data = {
     columns: [
@@ -65,19 +72,50 @@ const Table = ({ list }) => {
           // onClick={() => history.push(`/students/student/${id}`)}
         >
           <FontAwesomeIcon
+            id={"courses"+id}
+            data-tooltip-content="Click to add courses"
             icon={faBook}
             onClick={() => {
+              getAssignCourses(id);
+              setModalType("courses");
               setShowModal(true), setId(id);
             }}
             className="me-3"
           />
-          <FontAwesomeIcon icon={faEdit} className="me-3" />
           <FontAwesomeIcon
+            id={"grades"+id}
+            data-tooltip-content="Click to add grades"
+            icon={faClipboardUser}
+            className="me-3"
+            onClick={() => {
+              getAssignCourses(id);
+              setModalType("grades");
+              setShowModal(true), setId(id);
+            }}
+          />
+          <FontAwesomeIcon
+            id={"attendance"+id}
+            data-tooltip-content="Click to mark attendance"
+            icon={faEdit}
+            className="me-3"
+            onClick={() => {
+              getAssignCourses(id);
+              setModalType("attendance");
+              setShowModal(true), setId(id);
+            }}
+          />
+          <FontAwesomeIcon
+            id={"profile"+id}
+            data-tooltip-content="Click to view profile"
             onClick={() =>
               router.push({ pathname: "/students/student", query: { id: id } })
             }
             icon={faEye}
           />
+          <ReactTooltip anchorId={"attendance"+id} />
+          <ReactTooltip anchorId={"profile"+id} />
+          <ReactTooltip anchorId={"grades"+id} />
+          <ReactTooltip anchorId={"courses"+id} />
         </div>
       </div>
     );
@@ -92,14 +130,10 @@ const Table = ({ list }) => {
       actions: Action(e?.id?.toString()),
     });
   });
+
   return (
     <div className="table-responsive">
       <MDBDataTable responsive bordered data={data} />
-      <ModalComponent
-        showModal={showModal}
-        setShowModal={setShowModal}
-        id={id}
-      />
     </div>
   );
 };

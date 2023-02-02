@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 // custom css
 import "../styles/globals.css";
+// tooltip css
+import 'react-tooltip/dist/react-tooltip.css'
 // import type { AppProps } from "next/app";
 // Internal Import
 import { StudentsProvider } from "../context/StudentsApp";

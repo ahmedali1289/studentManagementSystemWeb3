@@ -1,25 +1,46 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-
-function ModalComponent({ showModal, setShowModal, id }) {
-    console.log('====================================');
-    console.log(id);
-    console.log('====================================');
+import Button from "./Button";
+function ModalComponent({
+  showModal,
+  setShowModal,
+  id,
+  heading,
+  body,
+  courses,
+  modalFunction,
+  modalType,
+  marks,
+  attendance
+}) {
+  function saveCourse() {
+    const data = { id: id, course: courses.value };
+    setShowModal(false);
+    modalFunction(data);
+  }
+  function saveGrades() {
+    const data = { id: id,  grade:marks, courseIndex: courses};
+    setShowModal(false);
+    modalFunction(data);
+  }
+  function saveAttendance() {
+    const data = { id: id,  attendance:attendance, courseIndex: courses};
+    setShowModal(false);
+    modalFunction(data);
+  }
+  function cancel() {
+    setShowModal(false);
+  }
   return (
     <>
       <Modal show={showModal}>
         <Modal.Header>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title style={{ color: "#fff" }}>{heading}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{body}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => setShowModal(false)}>
-            Save Changes
-          </Button>
+          <Button text={"Cancel"} onclick={cancel} />
+          <Button text={"Save"} onclick={modalType == 'course' ? saveCourse : modalType == 'grades' ? saveGrades : saveAttendance} />
         </Modal.Footer>
       </Modal>
     </>

@@ -82,14 +82,12 @@ contract StudentContract {
         public
         view
         returns (
-            StudentData[] memory
+            StudentData memory
         )
     {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
-                return (
-                    students
-                );
+                return (students[i]);
             }
         }
     }
@@ -102,6 +100,17 @@ contract StudentContract {
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == studentId) {
                 return (students[i].courses, students[i].grades);
+            }
+        }
+    }
+    function getAssignedCourses(uint256 studentId)
+        public
+        view
+        returns (string[] memory, uint256)
+    {
+        for (uint256 i = 0; i < students.length; i++) {
+            if (students[i].id == studentId) {
+                return (students[i].courses, studentId);
             }
         }
     }

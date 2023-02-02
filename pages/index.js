@@ -7,7 +7,6 @@ const Home = () => {
   const { connectWallet, addStudent, currentAccount, studentsList } =
     useContext(StudentsContext);
   useEffect(() => {
-    console.log("Updated State", studentsList);
   }, [studentsList]);
 
   return (

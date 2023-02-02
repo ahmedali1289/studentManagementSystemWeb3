@@ -1,8 +1,8 @@
 import React from "react";
 
-function InputFeilds({ label, labelColor, placeholder, labelFontSize, setState, state }) {
+function InputFeilds({ label, labelColor, placeholder, labelFontSize, setState, state, containerWidth }) {
   return (
-    <div className="d-flex flex-column w-50 marginHorizontalAuto">
+    <div className={`${containerWidth} d-flex flex-column marginHorizontalAuto`}>
       <div className="inputContainer">
       <label className="formInputLabels" style={{color:labelColor, fontSize:labelFontSize}}>{label}</label>
       <input
