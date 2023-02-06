@@ -11,7 +11,9 @@ function ModalComponent({
   modalFunction,
   modalType,
   marks,
-  attendance
+  attendance,
+  fees,
+  courseNames
 }) {
   function saveCourse() {
     const data = { id: id, course: courses.value };
@@ -28,6 +30,11 @@ function ModalComponent({
     setShowModal(false);
     modalFunction(data);
   }
+  function addCourse() {
+    const data = { courseName:courseNames, courseFee: fees};
+    setShowModal(false);
+    modalFunction(data);
+  }
   function cancel() {
     setShowModal(false);
   }
@@ -40,7 +47,7 @@ function ModalComponent({
         <Modal.Body>{body}</Modal.Body>
         <Modal.Footer>
           <Button text={"Cancel"} onclick={cancel} />
-          <Button text={"Save"} onclick={modalType == 'course' ? saveCourse : modalType == 'grades' ? saveGrades : saveAttendance} />
+          <Button text={"Save"} onclick={modalType == 'course' ? saveCourse : modalType == 'addCourse' ? addCourse : modalType == 'editCourse' ? addCourse : modalType == 'grades' ? saveGrades : saveAttendance} />
         </Modal.Footer>
       </Modal>
     </>

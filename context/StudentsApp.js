@@ -11,6 +11,8 @@ export const StudentsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [studentById, setStudentById] = useState(null);
   const [assignedCourses, setAssignedCourses] = useState(null);
+  const [coursesList, setCoursesList] = useState([]);
+  const [coursesListAdd, setCoursesListAdd] = useState(false);
   useEffect(() => {
     getStudents()
   }, [studentAdd])
@@ -28,6 +30,7 @@ export const StudentsProvider = ({ children }) => {
         if(accounts){
           setCurrentAccount(accounts[0]);
           getStudents()
+          getCourses()
         }
         else{
           console.log("connect metamask Account")
@@ -142,6 +145,39 @@ export const StudentsProvider = ({ children }) => {
       console.log(error,"errors");
     }
   };
+  const addCourses = async (data) => {
+    console.log(data);
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const createList = await contract.addCourse(data.courseName,data.courseFee)
+      createList.wait();
+      if(createList){
+        setTimeout(() => {
+          getCourses()
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getCourses = async () => {
+    try {
+      const web3modal = new Web3Modal();
+      const connection = await web3modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = await fetchContract(signer);
+      const courses = await contract.viewCourses()
+        setCoursesList(courses)
+    } catch (error) {
+      console.log(error,"errors");
+    }
+  };
+  
   return (
     <StudentsContext.Provider
       value={{
@@ -157,7 +193,10 @@ export const StudentsProvider = ({ children }) => {
         assignedCourses,
         setAssignedCourses,
         addGradeToCourse,
-        markAttendanceToAssignedCourses
+        markAttendanceToAssignedCourses,
+        coursesList,
+        addCourses,
+        getCourses
       }}
     >
       {children}

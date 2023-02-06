@@ -15,50 +15,10 @@ const Table = ({
   setShowModal,
   getAssignCourses,
   setModalType,
+  type
 }) => {
   const router = useRouter();
-  const data = {
-    columns: [
-      {
-        label: "Id",
-        field: "id",
-        sort: "asc",
-        width: 150,
-      },
-      {
-        label: "Name",
-        field: "name",
-        sort: "asc",
-        width: 150,
-      },
-      {
-        label: "Address",
-        field: "address",
-        sort: "asc",
-        width: 270,
-      },
-      {
-        label: "Age",
-        field: "age",
-        sort: "asc",
-        width: 200,
-      },
-      {
-        label: "Number",
-        field: "number",
-        sort: "asc",
-        width: 100,
-      },
-      {
-        label: "Actions",
-        field: "actions",
-        sort: "asc",
-        width: 100,
-      },
-    ],
-    rows: [],
-  };
-  const Action = (id) => {
+  const Action = (id, type) => {
     return (
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div
@@ -71,6 +31,22 @@ const Table = ({
           }}
           // onClick={() => history.push(`/students/student/${id}`)}
         >
+          {
+            type== 'addCourse' ?
+            null
+          //   <FontAwesomeIcon
+          //   id={"courses"+id}
+          //   data-tooltip-content="Click to edit course"
+          //   icon={faEdit}
+          //   onClick={() => {
+          //     getAssignCourses(id);
+          //     setModalType("editCourse");
+          //     setShowModal(true), setId(id);
+          //   }}
+          //   className="me-3"
+          // />
+            : 
+            <>
           <FontAwesomeIcon
             id={"courses"+id}
             data-tooltip-content="Click to add courses"
@@ -112,6 +88,8 @@ const Table = ({
             }
             icon={faEye}
           />
+            </>
+          }
           <ReactTooltip anchorId={"attendance"+id} />
           <ReactTooltip anchorId={"profile"+id} />
           <ReactTooltip anchorId={"grades"+id} />
@@ -120,16 +98,101 @@ const Table = ({
       </div>
     );
   };
-  list?.map((e, index) => {
-    data.rows?.push({
-      id: e?.id?.toString(),
-      name: e?.name,
-      address: e?.studentaddress,
-      age: e?.age?.toString(),
-      number: e?.number?.toString(),
-      actions: Action(e?.id?.toString()),
+  var data
+  if(type == "addCourse"){
+    data = {
+      columns: [
+        {
+          label: "Id",
+          field: "id",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Course Name",
+          field: "courseName",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Fees",
+          field: "fees",
+          sort: "asc",
+          width: 100,
+        },
+        {
+          label: "Actions",
+          field: "actions",
+          sort: "asc",
+          width: 100,
+        },
+      ],
+      rows: [],
+    };
+    list?.map((e, index) => {
+      data.rows?.push({
+        id: e?.id?.toString(),
+        courseName: e?.name,
+        fees: e?.fee?.toString(),
+        actions: Action(e?.id?.toString(),'addCourse'),
+      });
     });
-  });
+  }
+  else{
+    data = {
+      columns: [
+        {
+          label: "Id",
+          field: "id",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Name",
+          field: "name",
+          sort: "asc",
+          width: 150,
+        },
+        {
+          label: "Address",
+          field: "address",
+          sort: "asc",
+          width: 270,
+        },
+        {
+          label: "Age",
+          field: "age",
+          sort: "asc",
+          width: 200,
+        },
+        {
+          label: "Number",
+          field: "number",
+          sort: "asc",
+          width: 100,
+        },
+        {
+          label: "Actions",
+          field: "actions",
+          sort: "asc",
+          width: 100,
+        },
+      ],
+      rows: [],
+    };
+    list?.map((e, index) => {
+      data.rows?.push({
+        id: e?.id?.toString(),
+        name: e?.name,
+        address: e?.studentaddress,
+        age: e?.age?.toString(),
+        number: e?.number?.toString(),
+        actions: Action(e?.id?.toString(),null),
+      });
+    });
+  }
+
+  
 
   return (
     <div className="table-responsive">

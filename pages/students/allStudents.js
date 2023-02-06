@@ -16,7 +16,8 @@ function Students() {
     assignedCourses,
     setAssignedCourses,
     addGradeToCourse,
-    markAttendanceToAssignedCourses
+    markAttendanceToAssignedCourses,
+    coursesList
   } = useContext(StudentsContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -26,16 +27,22 @@ function Students() {
   const [marks, setMarks] = useState("");
   const [attendance, setAttendance] = useState("");
   const [courseIndex, setCourseIndex] = useState("");
-  const originalArray = [
-    { value: "English", label: "English" },
-    { value: "History", label: "History" },
-    { value: "Maths", label: "Maths" },
-    { value: "Physics", label: "Physics" },
-    { value: "Chemistry", label: "Chemistry" },
-    { value: "Biology", label: "Biology" },
-    { value: "French", label: "French" },
-  ];
+  console.log('====================================');
+  console.log(coursesList);
+  console.log('====================================');
+  const [originalArray, setOriginalArray] = useState(null);
   const [options, setOptions] = useState(originalArray);
+  useEffect(() => {
+    let courses = []
+    if(coursesList){
+      coursesList?.map(course=>{
+        courses.push({value:course?.name,label:course?.name})
+      })
+    }
+    setOriginalArray(courses)
+    setOptions(courses)
+  }, [coursesList])
+  
   useEffect(() => {
     let gradesCourses = [];
     originalArray?.map((option) => {

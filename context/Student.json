@@ -2,6 +2,24 @@
 	{
 		"inputs": [
 			{
+				"internalType": "string",
+				"name": "courseName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "courseFee",
+				"type": "uint256"
+			}
+		],
+		"name": "addCourse",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "_studentId",
 				"type": "uint256"
@@ -58,9 +76,9 @@
 				"type": "uint256"
 			},
 			{
-				"internalType": "string",
-				"name": "course",
-				"type": "string"
+				"internalType": "uint256",
+				"name": "courseId",
+				"type": "uint256"
 			}
 		],
 		"name": "assignCourse",
@@ -128,9 +146,9 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "string[]",
+						"internalType": "uint256[]",
 						"name": "courses",
-						"type": "string[]"
+						"type": "uint256[]"
 					},
 					{
 						"internalType": "uint256[]",
@@ -159,36 +177,12 @@
 				"type": "uint256"
 			}
 		],
-		"name": "getAssignedCourses",
-		"outputs": [
-			{
-				"internalType": "string[]",
-				"name": "",
-				"type": "string[]"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "studentId",
-				"type": "uint256"
-			}
-		],
 		"name": "getAssignedCoursesWithGrades",
 		"outputs": [
 			{
-				"internalType": "string[]",
+				"internalType": "uint256[]",
 				"name": "",
-				"type": "string[]"
+				"type": "uint256[]"
 			},
 			{
 				"internalType": "uint256[]",
@@ -237,9 +231,9 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "string[]",
+						"internalType": "uint256[]",
 						"name": "courses",
-						"type": "string[]"
+						"type": "uint256[]"
 					},
 					{
 						"internalType": "uint256[]",
@@ -255,6 +249,36 @@
 				"internalType": "struct StudentContract.StudentData",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "viewCourses",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fee",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct StudentContract.Course[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

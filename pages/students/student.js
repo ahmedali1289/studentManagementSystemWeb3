@@ -16,8 +16,12 @@ function student() {
     if (id) {
       getStudent(id);
     } else return;
-  }, [id]);
-  useEffect(() => {}, [studentById]);
+  }, [id])
+  useEffect(() => {
+    if (id) {
+      console.log(studentById,"studentById");
+    } else return;
+  }, [studentById]);
 
   return (
     <div className="container cstmContainer">
@@ -108,7 +112,14 @@ function student() {
                   />
                 );
               })
-            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+            ) : (
+              <Label
+                classes={"ml-5"}
+                text={"N/A"}
+                color={"#fff"}
+                size={"14px"}
+              />
+            )
           ) : (
             <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
           )}
@@ -135,7 +146,14 @@ function student() {
                   />
                 );
               })
-            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+            ) : (
+              <Label
+                classes={"ml-5"}
+                text={"N/A"}
+                color={"#fff"}
+                size={"14px"}
+              />
+            )
           ) : (
             <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
           )}
@@ -156,13 +174,20 @@ function student() {
                   <Label
                     key={index}
                     classes={"ml-5"}
-                    text={attend?.toString() + '%' + comma}
+                    text={attend?.toString() + "%" + comma}
                     color={"#fff"}
                     size={"14px"}
                   />
                 );
               })
-            ) : <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+            ) : (
+              <Label
+                classes={"ml-5"}
+                text={"N/A"}
+                color={"#fff"}
+                size={"14px"}
+              />
+            )
           ) : (
             <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
           )}
