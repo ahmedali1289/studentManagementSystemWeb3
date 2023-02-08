@@ -13,6 +13,7 @@ export const StudentsProvider = ({ children }) => {
   const [assignedCourses, setAssignedCourses] = useState(null);
   const [coursesList, setCoursesList] = useState([]);
   const [coursesListAdd, setCoursesListAdd] = useState(false);
+  const [error, setError] = useState('')
   useEffect(() => {
     getStudents();
   }, [studentAdd]);
@@ -177,7 +178,7 @@ export const StudentsProvider = ({ children }) => {
         }, 2000);
       }
     } catch (error) {
-      console.log(error);
+      setError(error)
     }
   };
   const getCourses = async () => {
@@ -213,6 +214,7 @@ export const StudentsProvider = ({ children }) => {
         coursesList,
         addCourses,
         getCourses,
+        error
       }}
     >
       {children}

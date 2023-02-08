@@ -6,6 +6,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "../styles/globals.css";
 // tooltip css
 import 'react-tooltip/dist/react-tooltip.css'
+// toaster
+import 'react-toastify/dist/ReactToastify.css';
 // import type { AppProps } from "next/app";
 // Internal Import
 import { StudentsProvider } from "../context/StudentsApp";

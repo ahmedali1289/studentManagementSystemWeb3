@@ -1,10 +1,5 @@
 [
 	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -89,6 +84,60 @@
 		"name": "assignCourse",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_studentId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_attendance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "courseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "markAttendance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "payCoursesFees",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "checkTotalFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -190,6 +239,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getContractBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -254,23 +316,19 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_studentId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_attendance",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "courseIndex",
+				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "markAttendance",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "studentPayments",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -293,6 +351,11 @@
 						"internalType": "uint256",
 						"name": "fee",
 						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "feePaid",
+						"type": "bool"
 					}
 				],
 				"internalType": "struct StudentContract.Course[]",

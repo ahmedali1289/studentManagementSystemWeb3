@@ -7,17 +7,25 @@ import Heading from "../../components/Heading";
 import { StudentsContext } from "../../context/StudentsApp";
 import ModalComponent from "../../components/Modal";
 import InputFeilds from "../../components/InputFeilds";
+import { showToast } from "../../components/Toaster";
 function Students() {
   const {
     coursesList,
     addCourses,
+    error
   } = useContext(StudentsContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [course, setCourse] = useState(null);
   const [fees, setFees] = useState(null);
   const [id, setId] = useState(null);
-  
+  useEffect(() => {
+    handleClick
+    console.log(error);
+  }, [error])
+  const handleClick = () => {
+    showToast('Hello, World!', 'success');
+  };
   const modalBody = () => {
     return (
       <div>
