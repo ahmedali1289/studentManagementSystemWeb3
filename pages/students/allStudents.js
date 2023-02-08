@@ -14,10 +14,10 @@ function Students() {
     assignCourse,
     getAssignCourses,
     assignedCourses,
-    setAssignedCourses,
+    getCourses,
     addGradeToCourse,
     markAttendanceToAssignedCourses,
-    coursesList
+    coursesList,
   } = useContext(StudentsContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -27,53 +27,68 @@ function Students() {
   const [marks, setMarks] = useState("");
   const [attendance, setAttendance] = useState("");
   const [courseIndex, setCourseIndex] = useState("");
-  console.log('====================================');
-  console.log(coursesList);
-  console.log('====================================');
   const [originalArray, setOriginalArray] = useState(null);
   const [options, setOptions] = useState(originalArray);
   useEffect(() => {
-    let courses = []
-    if(coursesList){
-      coursesList?.map(course=>{
-        courses.push({value:course?.name,label:course?.name})
-      })
+    let courses = [];
+    if (coursesList) {
+      coursesList?.map((course) => {
+        courses.push({
+          value: course?.name,
+          label: course?.name,
+          id: course?.id?.toString(),
+        });
+      });
     }
-    setOriginalArray(courses)
-    setOptions(courses)
-  }, [coursesList])
-  
+    setOriginalArray(courses);
+    setOptions(courses);
+  }, [coursesList]);
   useEffect(() => {
     let gradesCourses = [];
-    originalArray?.map((option) => {
-      assignedCourses?.[0]?.map((assignItem) => {
-        if (option?.value == assignItem) {
-          gradesCourses.push(option);
-        }
-      });
+    coursesList?.map((e) => {
+      if (e) {
+        assignedCourses?.map((i) => {
+          if (i) {
+            if (e?.id?.toString() == i?.toString()) {
+              gradesCourses.push({
+                value: e?.name,
+                label: e?.name,
+                id: e?.id?.toString(),
+              });
+            }
+          }
+        });
+      }
     });
-    if(assignedCourses?.[0]?.length){
-      setOptions(originalArray.filter(val => !gradesCourses.includes(val)))
-      setassignedCoursesForGrades(gradesCourses)
-    }
-    else{
+    if (gradesCourses?.length) {
+      setassignedCoursesForGrades(gradesCourses);
+      setOptions(originalArray?.filter((item,index) => item?.id !== gradesCourses?.[index]?.id));
+    } else {
       setOptions(originalArray);
-      setassignedCoursesForGrades([])
+      setassignedCoursesForGrades([]);
     }
   }, [assignedCourses]);
   const modalBody = () => {
     return (
       <div>
         <SelectComponent
-          options={modalType == "grades" || modalType == "attendance" ? assignedCoursesForGrades : options}
-          setCourses={modalType == "grades" || modalType == "attendance" ? setCourseIndex : setCourses}
+          options={
+            modalType == "grades" || modalType == "attendance"
+              ? assignedCoursesForGrades
+              : options
+          }
+          setCourses={
+            modalType == "grades" || modalType == "attendance"
+              ? setCourseIndex
+              : setCourses
+          }
           type={modalType}
         />
         {modalType == "grades" || modalType == "attendance" ? (
           <div className="w-100 d-flex mt-3 mb-3">
             <InputFeilds
               containerWidth={"w-100"}
-              label={ modalType == "grades" ? "Number" : "Attendance"}
+              label={modalType == "grades" ? "Number" : "Attendance"}
               labelColor={"white"}
               placeholder={modalType == "grades" ? null : "%"}
               labelFontSize={"10px"}

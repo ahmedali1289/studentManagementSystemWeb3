@@ -26,7 +26,7 @@ contract StudentContract {
     }
     function addCourse(string memory courseName, uint256 courseFee) public {
         courseId++;
-        require(msg.sender == admin);
+        // require(msg.sender == admin);
         Course memory course = Course({
             id: courseId,
             name: courseName,
@@ -55,7 +55,7 @@ contract StudentContract {
     }
 
     function assignCourse(uint256 _studentId, uint256 courseId) public {
-        require(msg.sender == admin);
+        // require(msg.sender == admin);
         for (uint256 i = 0; i < students.length; i++) {
             if (students[i].id == _studentId) {
                 students[i].courses.push(courseId);
@@ -120,7 +120,17 @@ contract StudentContract {
             }
         }
     }
-
+    function getAssignedCourses(uint256 studentId)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        for (uint256 i = 0; i < students.length; i++) {
+            if (students[i].id == studentId) {
+                return (students[i].courses);
+            }
+        }
+    }
     function getAssignedCoursesWithGrades(uint256 studentId)
         public
         view

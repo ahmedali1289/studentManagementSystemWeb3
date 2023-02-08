@@ -16,7 +16,7 @@ function ModalComponent({
   courseNames
 }) {
   function saveCourse() {
-    const data = { id: id, course: courses.value };
+    const data = { id: id, course: courses.id };
     setShowModal(false);
     modalFunction(data);
   }
@@ -47,7 +47,7 @@ function ModalComponent({
         <Modal.Body>{body}</Modal.Body>
         <Modal.Footer>
           <Button text={"Cancel"} onclick={cancel} />
-          <Button text={"Save"} onclick={modalType == 'course' ? saveCourse : modalType == 'addCourse' ? addCourse : modalType == 'editCourse' ? addCourse : modalType == 'grades' ? saveGrades : saveAttendance} />
+          <Button text={"Save"} onclick={modalType == 'courses' ? saveCourse : modalType == 'addCourse' ? addCourse : modalType == 'editCourse' ? addCourse : modalType == 'grades' ? saveGrades : saveAttendance} />
         </Modal.Footer>
       </Modal>
     </>

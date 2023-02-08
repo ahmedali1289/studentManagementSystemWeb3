@@ -6,20 +6,20 @@ const fetchContract = (signerOrProvider) =>
   new ethers.Contract(studentAddress, studentABI, signerOrProvider);
 export const StudentsContext = React.createContext();
 export const StudentsProvider = ({ children }) => {
-  const [studentAdd, setStudentAdd] = useState(false)
-  const [studentsList, setStudentsList] = useState([])
+  const [studentAdd, setStudentAdd] = useState(false);
+  const [studentsList, setStudentsList] = useState([]);
   const [currentAccount, setCurrentAccount] = useState("");
   const [studentById, setStudentById] = useState(null);
   const [assignedCourses, setAssignedCourses] = useState(null);
   const [coursesList, setCoursesList] = useState([]);
   const [coursesListAdd, setCoursesListAdd] = useState(false);
   useEffect(() => {
-    getStudents()
-  }, [studentAdd])
+    getStudents();
+  }, [studentAdd]);
   useEffect(() => {
-    connectWallet()
-  }, [currentAccount])
-  
+    connectWallet();
+  }, [currentAccount]);
+
   // conntecting metamask
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -27,13 +27,12 @@ export const StudentsProvider = ({ children }) => {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        if(accounts){
+        if (accounts) {
           setCurrentAccount(accounts[0]);
-          getStudents()
-          getCourses()
-        }
-        else{
-          console.log("connect metamask Account")
+          getStudents();
+          getCourses();
+        } else {
+          console.log("connect metamask Account");
         }
       } catch (error) {
         console.log(error);
@@ -47,10 +46,15 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const createList = await contract.addStudent(data.name,data.studentaddress, data.age, data.number)
+      const createList = await contract.addStudent(
+        data.name,
+        data.studentaddress,
+        data.age,
+        data.number
+      );
       createList.wait();
-      if(createList){
-        setStudentAdd(true)
+      if (createList) {
+        setStudentAdd(true);
       }
     } catch (error) {
       console.log(error);
@@ -63,11 +67,11 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const getAllAddress = await contract.getAllStudents()
-      setStudentAdd(false)
-      setStudentsList(getAllAddress)
+      const getAllAddress = await contract.getAllStudents();
+      setStudentAdd(false);
+      setStudentsList(getAllAddress);
     } catch (error) {
-      console.log(error,"errors");
+      console.log(error, "errors");
     }
   };
   const getStudent = async (id) => {
@@ -77,10 +81,10 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const student = await contract.getStudent(id)
-      setStudentById(student)
+      const student = await contract.getStudent(id);
+      setStudentById(student);
     } catch (error) {
-      console.log(error,"errors");
+      console.log(error, "errors");
     }
   };
   const assignCourse = async (data) => {
@@ -90,10 +94,11 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const createList = await contract.assignCourse(data.id,data.courseIndex.value)
+      const createList = await contract.assignCourse(data.id, data.course);
       createList.wait();
-      if(createList){
-        getStudents()
+      if (createList) {
+        getStudents();
+        getAssignCourses();
       }
     } catch (error) {
       console.log(error);
@@ -106,10 +111,14 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const createList = await contract.addGrades(data.id,data.grade,data.courseIndex)
+      const createList = await contract.addGrades(
+        data.id,
+        data.grade,
+        data.courseIndex
+      );
       createList.wait();
-      if(createList){
-        getStudents()
+      if (createList) {
+        getStudents();
       }
     } catch (error) {
       console.log(error);
@@ -123,10 +132,14 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const createList = await contract.markAttendance(data.id,data.attendance,data.courseIndex)
+      const createList = await contract.markAttendance(
+        data.id,
+        data.attendance,
+        data.courseIndex
+      );
       createList.wait();
-      if(createList){
-        getStudents()
+      if (createList) {
+        getStudents();
       }
     } catch (error) {
       console.log(error);
@@ -139,10 +152,10 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const courses = await contract.getAssignedCourses(id)
-      setAssignedCourses(courses)
+      const courses = await contract.getAssignedCourses(id);
+      setAssignedCourses(courses);
     } catch (error) {
-      console.log(error,"errors");
+      console.log(error, "errors");
     }
   };
   const addCourses = async (data) => {
@@ -153,11 +166,14 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const createList = await contract.addCourse(data.courseName,data.courseFee)
+      const createList = await contract.addCourse(
+        data.courseName,
+        data.courseFee
+      );
       createList.wait();
-      if(createList){
+      if (createList) {
         setTimeout(() => {
-          getCourses()
+          getCourses();
         }, 2000);
       }
     } catch (error) {
@@ -171,13 +187,13 @@ export const StudentsProvider = ({ children }) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
-      const courses = await contract.viewCourses()
-        setCoursesList(courses)
+      const courses = await contract.viewCourses();
+      setCoursesList(courses);
     } catch (error) {
-      console.log(error,"errors");
+      console.log(error, "errors");
     }
   };
-  
+
   return (
     <StudentsContext.Provider
       value={{
@@ -196,7 +212,7 @@ export const StudentsProvider = ({ children }) => {
         markAttendanceToAssignedCourses,
         coursesList,
         addCourses,
-        getCourses
+        getCourses,
       }}
     >
       {children}

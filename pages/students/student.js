@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
+import CurrencyFormatter from "../../components/CurrencyFormatter";
 import Heading from "../../components/Heading";
 import Label from "../../components/Label";
 import { StudentsContext } from "../../context/StudentsApp";
 function student() {
   const [id, setId] = useState(null);
-  const { getStudent, studentById } = useContext(StudentsContext);
+  const { getStudent, studentById, coursesList } = useContext(StudentsContext);
   const router = useRouter();
+  const [assignedCourses, setAssignedCourses] = useState([]);
   useEffect(() => {
     if (router.query.id) {
       setId(Number(router.query.id));
@@ -16,10 +18,27 @@ function student() {
     if (id) {
       getStudent(id);
     } else return;
-  }, [id])
+  }, [id]);
   useEffect(() => {
     if (id) {
-      console.log(studentById,"studentById");
+      let courses = [];
+      if (studentById?.courses?.toString() != 0) {
+        coursesList?.map((e) => {
+          if (e) {
+            return studentById?.courses?.map((i, index) => {
+              const comma =
+                index == studentById?.courses?.length - 1 ? "" : ",";
+              if (i) {
+                if (e?.id?.toString() == i?.toString()) {
+                  courses?.push(e);
+                }
+              }
+            });
+          }
+        });
+      }
+      console.log(courses);
+      setAssignedCourses(courses);
     } else return;
   }, [studentById]);
 
@@ -98,18 +117,55 @@ function student() {
             size={"14px"}
           />
           {studentById?.courses?.length ? (
-            studentById?.courses?.toString() != 0 ? (
-              studentById?.courses?.map((course, index) => {
+            assignedCourses ? (
+              assignedCourses?.map((e, index) => {
                 const comma =
                   index == studentById?.courses?.length - 1 ? "" : ",";
                 return (
                   <Label
                     key={index}
                     classes={"ml-5"}
-                    text={course + comma}
+                    text={e?.name + comma}
                     color={"#fff"}
                     size={"14px"}
                   />
+                );
+              })
+            ) : (
+              <Label
+                classes={"ml-5"}
+                text={"N/A"}
+                color={"#fff"}
+                size={"14px"}
+              />
+            )
+          ) : (
+            <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          )}
+        </div>
+        <div className="col-sm-6 d-flex justify-content-start mt-5">
+          <Label
+            classes={"me-3"}
+            text={"Per Course:"}
+            color={"#fff"}
+            size={"14px"}
+          />
+          {studentById?.courses?.length ? (
+            assignedCourses ? (
+              assignedCourses?.map((e, index) => {
+                const comma =
+                  index == studentById?.courses?.length - 1 ? "" : ",";
+                return (
+                  <>
+                    <Label
+                      key={index}
+                      classes={"ml-5"}
+                      text={CurrencyFormatter(Number(e.fee))}
+                      color={"#fff"}
+                      size={"14px"}
+                    />
+                    <span style={{ color: "#fff" }}>{comma}</span>
+                  </>
                 );
               })
             ) : (
@@ -180,6 +236,38 @@ function student() {
                   />
                 );
               })
+            ) : (
+              <Label
+                classes={"ml-5"}
+                text={"N/A"}
+                color={"#fff"}
+                size={"14px"}
+              />
+            )
+          ) : (
+            <Label classes={"ml-5"} text={"N/A"} color={"#fff"} size={"14px"} />
+          )}
+        </div>
+        <div className="col-sm-6 d-flex justify-content-start mt-5">
+          <Label
+            classes={"me-3"}
+            text={"Total Fees:"}
+            color={"#fff"}
+            size={"14px"}
+          />
+          {studentById?.courses?.length ? (
+            assignedCourses ? (
+              <Label
+                classes={"ml-5"}
+                text={CurrencyFormatter(
+                  assignedCourses.reduce(
+                    (acc, obj) => Number(acc) + Number(obj.fee),
+                    0
+                  )
+                )}
+                color={"#fff"}
+                size={"14px"}
+              />
             ) : (
               <Label
                 classes={"ml-5"}
