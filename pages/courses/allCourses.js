@@ -1,29 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
 import Table from "../../components/Table";
 import Heading from "../../components/Heading";
 import { StudentsContext } from "../../context/StudentsApp";
 import ModalComponent from "../../components/Modal";
 import InputFeilds from "../../components/InputFeilds";
-import { showToast, Toaster } from "../../components/Toaster";
-import { ToastContainer } from "react-toastify";
+import { showToast } from "../../components/Toaster";
+import ErrorHandler from "../../components/ErrorHandler";
 function Students() {
-  const { coursesList, addCourses, error } = useContext(StudentsContext);
+  const { coursesList, addCourses, error, setError } = useContext(StudentsContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [course, setCourse] = useState(null);
   const [fees, setFees] = useState(null);
   const [id, setId] = useState(null);
   useEffect(() => {
-    console.log(error);
     if(error){
-      const revertMessage = error?.message.match(
-        /reverted with reason string '(.*)'/
-      )[1];
-      const messageToaster = revertMessage.split('"')[0];
-      showToast(messageToaster, "error");
+      ErrorHandler(error)
+      showToast(ErrorHandler(error), "error");
+      setError(null)
     }
   }, [error]);
 
@@ -115,8 +111,6 @@ function Students() {
           )}
         </div>
       </div>
-      {/* <Toaster /> */}
-      <ToastContainer />
     </div>
   );
 }

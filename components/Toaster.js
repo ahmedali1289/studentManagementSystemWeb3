@@ -1,16 +1,5 @@
-import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const Toaster = () => {
-  return (
-    <>
-      <ToastContainer />
-      <Toaster />
-    </>
-  );
-};
-
 const showToast = (message, type) => {
   switch (type) {
     case 'success':
@@ -31,4 +20,4 @@ const showToast = (message, type) => {
   }
 };
 
-export { Toaster, showToast };
+export { showToast };

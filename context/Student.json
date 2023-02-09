@@ -1,5 +1,23 @@
 [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "message",
+				"type": "string"
+			}
+		],
+		"name": "Success",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -77,7 +95,7 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "courseId",
+				"name": "_courseId",
 				"type": "uint256"
 			}
 		],
@@ -92,41 +110,6 @@
 				"internalType": "uint256",
 				"name": "_studentId",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_attendance",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "courseIndex",
-				"type": "uint256"
-			}
-		],
-		"name": "markAttendance",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "payCoursesFees",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "studentId",
-				"type": "uint256"
 			}
 		],
 		"name": "checkTotalFee",
@@ -134,6 +117,48 @@
 			{
 				"internalType": "uint256",
 				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "courseId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "courses",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "fee",
 				"type": "uint256"
 			}
 		],
@@ -185,6 +210,11 @@
 						"internalType": "uint256[]",
 						"name": "attendance",
 						"type": "uint256[]"
+					},
+					{
+						"internalType": "bool",
+						"name": "feeStatus",
+						"type": "bool"
 					}
 				],
 				"internalType": "struct StudentContract.StudentData[]",
@@ -199,7 +229,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "studentId",
+				"name": "_studentId",
 				"type": "uint256"
 			}
 		],
@@ -218,7 +248,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "studentId",
+				"name": "_studentId",
 				"type": "uint256"
 			}
 		],
@@ -255,7 +285,7 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "studentId",
+				"name": "_studentId",
 				"type": "uint256"
 			}
 		],
@@ -302,11 +332,65 @@
 						"internalType": "uint256[]",
 						"name": "attendance",
 						"type": "uint256[]"
+					},
+					{
+						"internalType": "bool",
+						"name": "feeStatus",
+						"type": "bool"
 					}
 				],
 				"internalType": "struct StudentContract.StudentData",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_studentId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_attendance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "courseIndex",
+				"type": "uint256"
+			}
+		],
+		"name": "markAttendance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "payCoursesFees",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "studentId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -332,6 +416,50 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "students",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "studentaddress",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "age",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "number",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "feeStatus",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "viewCourses",
 		"outputs": [
@@ -351,11 +479,6 @@
 						"internalType": "uint256",
 						"name": "fee",
 						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "feePaid",
-						"type": "bool"
 					}
 				],
 				"internalType": "struct StudentContract.Course[]",

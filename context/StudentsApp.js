@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Web3Modal from "web3Modal";
 import { ethers } from "ethers";
 import { studentAddress, studentABI } from "./constants";
+import { showToast } from "../components/Toaster";
 const fetchContract = (signerOrProvider) =>
   new ethers.Contract(studentAddress, studentABI, signerOrProvider);
 export const StudentsContext = React.createContext();
@@ -13,7 +14,7 @@ export const StudentsProvider = ({ children }) => {
   const [assignedCourses, setAssignedCourses] = useState(null);
   const [coursesList, setCoursesList] = useState([]);
   const [coursesListAdd, setCoursesListAdd] = useState(false);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   useEffect(() => {
     getStudents();
   }, [studentAdd]);
@@ -160,7 +161,6 @@ export const StudentsProvider = ({ children }) => {
     }
   };
   const addCourses = async (data) => {
-    console.log(data);
     try {
       const web3modal = new Web3Modal();
       const connection = await web3modal.connect();
@@ -175,10 +175,11 @@ export const StudentsProvider = ({ children }) => {
       if (createList) {
         setTimeout(() => {
           getCourses();
+          showToast("Course added successfully", "success");
         }, 2000);
       }
     } catch (error) {
-      setError(error)
+      setError(error);
     }
   };
   const getCourses = async () => {
@@ -214,7 +215,8 @@ export const StudentsProvider = ({ children }) => {
         coursesList,
         addCourses,
         getCourses,
-        error
+        error,
+        setError,
       }}
     >
       {children}
