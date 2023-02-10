@@ -3,26 +3,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Table from "../../components/Table";
 import Heading from "../../components/Heading";
-import { StudentsContext } from "../../context/StudentsApp";
+import { AppContext } from "../../context/AppContext";
 import ModalComponent from "../../components/Modal";
 import InputFeilds from "../../components/InputFeilds";
-import { showToast } from "../../components/Toaster";
-import ErrorHandler from "../../components/ErrorHandler";
 function Students() {
-  const { coursesList, addCourses, error, setError } = useContext(StudentsContext);
+  const { coursesList, addCourses } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [course, setCourse] = useState(null);
   const [fees, setFees] = useState(null);
   const [id, setId] = useState(null);
-  useEffect(() => {
-    if(error){
-      ErrorHandler(error)
-      showToast(ErrorHandler(error), "error");
-      setError(null)
-    }
-  }, [error]);
-
   const modalBody = () => {
     return (
       <div>

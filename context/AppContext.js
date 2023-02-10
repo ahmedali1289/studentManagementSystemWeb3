@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Web3Modal from "web3Modal";
 import { ethers } from "ethers";
+import errorHandler from '../components/ErrorHandler'
 import { studentAddress, studentABI } from "./constants";
 import { showToast } from "../components/Toaster";
 const fetchContract = (signerOrProvider) =>
   new ethers.Contract(studentAddress, studentABI, signerOrProvider);
-export const StudentsContext = React.createContext();
-export const StudentsProvider = ({ children }) => {
+export const AppContext = React.createContext();
+export const AppProvider = ({ children }) => {
   const [studentAdd, setStudentAdd] = useState(false);
   const [studentsList, setStudentsList] = useState([]);
   const [currentAccount, setCurrentAccount] = useState("");
@@ -14,6 +15,7 @@ export const StudentsProvider = ({ children }) => {
   const [assignedCourses, setAssignedCourses] = useState(null);
   const [coursesList, setCoursesList] = useState([]);
   const [coursesListAdd, setCoursesListAdd] = useState(false);
+  const [token, setToken] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
     getStudents();
@@ -21,7 +23,24 @@ export const StudentsProvider = ({ children }) => {
   useEffect(() => {
     connectWallet();
   }, [currentAccount]);
-
+  const errorMap = {
+    "invalid BigNumber string":
+      "Oops! The number you entered is not valid. Please enter a valid number and try again.",
+    "invalid BigNumber value":
+      "Oops! You didn't enter any number. Please enter a valid number and try again.",
+    "cannot estimate gas; transaction may fail":
+      "Oops! There was a problem estimating the gas required for the transaction. Please try again later or contact support for assistance.",
+    "reverted with reason string":
+      "Oops! The transaction was rejected. The reason given was: ",
+    default:
+      "Oops! An unknown error occurred. Please try again or contact support for assistance.",
+  };
+  useEffect(() => {
+    if(error){
+      showToast(error, "error");
+      setError(null)
+    }
+  }, [error]);
   // conntecting metamask
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -38,6 +57,9 @@ export const StudentsProvider = ({ children }) => {
         }
       } catch (error) {
         console.log(error);
+        if(errorHandler(errorMap,error)){
+          setError(errorHandler(errorMap,error));
+        }
       }
     }
   };
@@ -59,6 +81,9 @@ export const StudentsProvider = ({ children }) => {
         setStudentAdd(true);
       }
     } catch (error) {
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
       console.log(error);
     }
   };
@@ -74,6 +99,9 @@ export const StudentsProvider = ({ children }) => {
       setStudentsList(getAllAddress);
     } catch (error) {
       console.log(error, "errors");
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const getStudent = async (id) => {
@@ -87,6 +115,9 @@ export const StudentsProvider = ({ children }) => {
       setStudentById(student);
     } catch (error) {
       console.log(error, "errors");
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const assignCourse = async (data) => {
@@ -104,6 +135,9 @@ export const StudentsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const addGradeToCourse = async (data) => {
@@ -124,6 +158,9 @@ export const StudentsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const markAttendanceToAssignedCourses = async (data) => {
@@ -145,6 +182,9 @@ export const StudentsProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const getAssignCourses = async (id) => {
@@ -158,6 +198,9 @@ export const StudentsProvider = ({ children }) => {
       setAssignedCourses(courses);
     } catch (error) {
       console.log(error, "errors");
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
   const addCourses = async (data) => {
@@ -173,15 +216,20 @@ export const StudentsProvider = ({ children }) => {
       );
       createList.wait();
       if (createList) {
-        setTimeout(() => {
-          getCourses();
-          showToast("Course added successfully", "success");
-        }, 2000);
+        getCourses();
+        showToast("Course list updated", "success");
       }
     } catch (error) {
-      setError(error);
+      console.log(error.message);
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
+  useEffect(() => {
+    getCourses();
+  }, [coursesList]);
+
   const getCourses = async () => {
     try {
       const web3modal = new Web3Modal();
@@ -190,15 +238,22 @@ export const StudentsProvider = ({ children }) => {
       const signer = provider.getSigner();
       const contract = await fetchContract(signer);
       const courses = await contract.viewCourses();
-      setCoursesList(courses);
+      if (courses) {
+        setCoursesList(courses);
+      }
     } catch (error) {
       console.log(error, "errors");
+      if(errorHandler(errorMap,error)){
+        setError(errorHandler(errorMap,error));
+      }
     }
   };
 
   return (
-    <StudentsContext.Provider
+    <AppContext.Provider
       value={{
+        setToken,
+        token,
         connectWallet,
         addStudent,
         currentAccount,
@@ -220,7 +275,7 @@ export const StudentsProvider = ({ children }) => {
       }}
     >
       {children}
-    </StudentsContext.Provider>
+    </AppContext.Provider>
   );
 };
 

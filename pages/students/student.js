@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from "react";
 import CurrencyFormatter from "../../components/CurrencyFormatter";
 import Heading from "../../components/Heading";
 import Label from "../../components/Label";
-import { StudentsContext } from "../../context/StudentsApp";
+import { AppContext } from "../../context/AppContext";
 function student() {
   const [id, setId] = useState(null);
-  const { getStudent, studentById, coursesList } = useContext(StudentsContext);
+  const { getStudent, studentById, coursesList } = useContext(AppContext);
   const router = useRouter();
   const [assignedCourses, setAssignedCourses] = useState([]);
   useEffect(() => {

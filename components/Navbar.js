@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import the icons you need
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { StudentsContext } from "../context/StudentsApp";
+import { AppContext } from "../context/AppContext";
 import Link from "next/link";
 const Navbar = () => {
   const { connectWallet, addStudent, currentAccount, studentsList } =
-    useContext(StudentsContext);
+    useContext(AppContext);
   const disconnect = () => {
     // window.ethereum.close()
     window.ethereum.autoRefreshOnNetworkChange = false;

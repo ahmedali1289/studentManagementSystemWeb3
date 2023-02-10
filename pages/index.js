@@ -1,20 +1,13 @@
 import React, { useEffect, useContext, useState } from "react";
-import { StudentsContext } from "../context/StudentsApp";
-import Navbar from "../components/Navbar";
-import StudentsTable from "../components/Table";
+import { AppContext } from "../context/AppContext";
+import Router from "next/router";
 const Home = () => {
-  const [data, setData] = useState("");
-  const { connectWallet, addStudent, currentAccount, studentsList } =
-    useContext(StudentsContext);
-  useEffect(() => {
-  }, [studentsList]);
-
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-sm-12">
-            <h1>No data yet</h1>
+            <div>no data</div>
           </div>
         </div>
       </div>

@@ -3,17 +3,17 @@ import React, { useContext, useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Heading from "../../components/Heading";
 import InputFeilds from "../../components/InputFeilds";
-import { StudentsContext } from "../../context/StudentsApp";
-import { useForm } from "react-hook-form";
+import { AppContext } from "../../context/AppContext";
+import axios from "axios";
 import checkForEmptyState from "../../context/helperFunctions";
 function AddStudent() {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [age, setAge] = useState('');
-  const [number, setNumber] = useState('');
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [age, setAge] = useState("");
+  const [number, setNumber] = useState("");
   const router = useRouter();
   const { addStudent, currentAccount, studentsList, studentAdd } =
-    useContext(StudentsContext);
+    useContext(AppContext);
   useEffect(() => {
     setName("");
     setAddress("");
@@ -23,8 +23,23 @@ function AddStudent() {
       router.back();
     }
   }, [studentsList, studentAdd]);
-
+  const handleSignUp = async () => {
+    const email = "ahmed@gmail.com";
+    const password = "password";
+    axios
+      .post("/api/login", {
+        email: email,
+        password: password,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   const addStudentFunc = () => {
+    handleSignUp();
     if (currentAccount) {
       if (name && address && age && number) {
         const data = {
@@ -33,7 +48,7 @@ function AddStudent() {
           age: age,
           number: number,
         };
-        addStudent(data);
+        // addStudent(data);
       } else {
         checkForEmptyState([
           { name: "name", value: name },

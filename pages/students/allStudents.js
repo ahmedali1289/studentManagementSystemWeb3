@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Table from "../../components/Table";
 import Heading from "../../components/Heading";
-import { StudentsContext } from "../../context/StudentsApp";
+import { AppContext } from "../../context/AppContext";
 import ModalComponent from "../../components/Modal";
 import SelectComponent from "../../components/Select";
 import InputFeilds from "../../components/InputFeilds";
@@ -14,11 +14,10 @@ function Students() {
     assignCourse,
     getAssignCourses,
     assignedCourses,
-    getCourses,
     addGradeToCourse,
     markAttendanceToAssignedCourses,
     coursesList,
-  } = useContext(StudentsContext);
+  } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const [courses, setCourses] = useState([]);
