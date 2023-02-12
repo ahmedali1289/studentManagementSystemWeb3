@@ -24,12 +24,11 @@ function AddStudent() {
     }
   }, [studentsList, studentAdd]);
   const handleSignUp = async () => {
-    const email = "ahmed@gmail.com";
-    const password = "password";
+    const email = "ahmedalirajput1289@gmail.com";
     axios
-      .post("/api/login", {
+      .post("/api/changepassword", {
         email: email,
-        password: password,
+        otp:8941
       })
       .then(function (response) {
         console.log(response);
@@ -40,26 +39,26 @@ function AddStudent() {
   };
   const addStudentFunc = () => {
     handleSignUp();
-    if (currentAccount) {
-      if (name && address && age && number) {
-        const data = {
-          name: name,
-          studentaddress: address,
-          age: age,
-          number: number,
-        };
-        // addStudent(data);
-      } else {
-        checkForEmptyState([
-          { name: "name", value: name },
-          { name: "address", value: address },
-          { name: "age", value: age },
-          { name: "number", value: number },
-        ]);
-      }
-    } else {
-      alert("connect your wallet account");
-    }
+    // if (currentAccount) {
+    //   if (name && address && age && number) {
+    //     const data = {
+    //       name: name,
+    //       studentaddress: address,
+    //       age: age,
+    //       number: number,
+    //     };
+    //     // addStudent(data);
+    //   } else {
+    //     checkForEmptyState([
+    //       { name: "name", value: name },
+    //       { name: "address", value: address },
+    //       { name: "age", value: age },
+    //       { name: "number", value: number },
+    //     ]);
+    //   }
+    // } else {
+    //   alert("connect your wallet account");
+    // }
   };
   return (
     <div className="container">
