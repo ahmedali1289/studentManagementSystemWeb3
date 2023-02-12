@@ -26,9 +26,9 @@ function AddStudent() {
   const handleSignUp = async () => {
     const email = "ahmedalirajput1289@gmail.com";
     axios
-      .post("/api/changepassword", {
+      .post("/api/signup", {
         email: email,
-        otp:8941
+        role:"student"
       })
       .then(function (response) {
         console.log(response);

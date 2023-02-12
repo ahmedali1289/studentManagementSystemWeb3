@@ -8,9 +8,14 @@ connect();
 export default async function handler(req, res) {
   try {
     const email = req.body.email;
+    const role = req.body.role;
 
     if (!validator.isEmail(email)) {
       return res.status(400).json({ status: "Invalid email address." });
+    }
+
+    if (!role) {
+      return res.status(400).json({ status: "Role is required." });
     }
 
     const existingUser = await User.findOne({ email });
@@ -25,7 +30,7 @@ export default async function handler(req, res) {
     };
 
     const user = await User.create(userData);
-    res.status(200).json({ email, password });
+    res.status(200).json({ email, password, role });
   } catch (error) {
     res.status(400).json({ status: "Not able to create a new user.", error });
   }

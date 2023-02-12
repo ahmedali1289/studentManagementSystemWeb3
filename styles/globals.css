@@ -91,6 +91,7 @@ body {
   margin: 5px auto;
   overflow: hidden;
   width: 80%;
+  background: #000;
 }
 .dropdown-item label {
   width: 100%;
