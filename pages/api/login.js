@@ -5,17 +5,20 @@ import validator from 'validator';
 connect();
 export default async function handler(req, res) {
     const { email, password } = req.body;
-    const user = await User.findOne({ email, password })
     if (!validator.isEmail(email)) {
         return res.status(400).json({ status: "Invalid email address." });
-      }
+    }
+
+    const user = await User.findOne({ email });
     if (!user) {
-        return res.status(400).json({ staus: "Not able to find the user" })
+        return res.status(400).json({ status: "Not able to find the user" });
     }
-    else {
-        const token = uuid();
-        user.token = token;
-        await user.save();
-        res.json({ status: "Successfully login", token: token })
+    if (user.password !== password) {
+        return res.status(400).json({ status: "Incorrect password." });
     }
+
+    const token = uuid();
+    user.token = token;
+    await user.save();
+    res.json({ status: "Successfully login", token: token });
 }

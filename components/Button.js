@@ -1,6 +1,5 @@
 import React from "react";
-
-function Button({ text, onclick }) {
+function Button({ text, onclick, loading }) {
   return (
     <div>
       <div className="cstmButton">
@@ -8,14 +7,17 @@ function Button({ text, onclick }) {
         <span></span>
         <span></span>
         <span></span>
-        <button
-        style={{border:'none', background:"none", color:"#fff"}}
-          onClick={() => {
-            onclick();
-          }}
-        >
-          {text}
-        </button>
+        {loading ?
+          <div className="spinner-border spinner-border-sm"></div>
+          : <button
+            style={{ border: 'none', background: "none", color: "#fff" }}
+            onClick={() => {
+              onclick();
+            }}
+          >
+            {text}
+          </button>
+        }
       </div>
     </div>
   );

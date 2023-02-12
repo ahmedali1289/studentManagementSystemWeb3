@@ -1,16 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import the icons you need
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { AppContext } from "../context/AppContext";
 import Link from "next/link";
+import  Router  from "next/router";
+import axios from "axios";
+import { showToast } from "./Toaster";
 const Navbar = () => {
-  const { connectWallet, addStudent, currentAccount, studentsList } =
+  const { connectWallet, addStudent, currentAccount, studentsList, setToken, token } =
     useContext(AppContext);
+    const [loading, setLoading] = useState(false)
   const disconnect = () => {
     // window.ethereum.close()
     window.ethereum.autoRefreshOnNetworkChange = false;
   };
+  const logout = () => {
+    setLoading(true)
+    axios.post('/api/logout', {token:token}).then(res=>{
+      setLoading(false)
+      showToast(res?.data?.status,'success')
+      setToken(null)
+      localStorage.clear()
+      Router.push('/')
+    }).catch(error=>{
+      setLoading(false)
+      showToast(error?.response?.data?.status,'error')
+    })
+  }
   return (
     <div className="container">
     <nav className="navbar navbar-expand-lg navbar-dark w-100">
@@ -66,6 +83,16 @@ const Navbar = () => {
                         Connect Wallet
                       </button>
                     )}
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item text-center">
+                    {loading ?
+                    <div className="spinner-border spinner-border-sm"></div> :
+                      <button className="white text-center" onClick={logout}>
+                        Logout
+                      </button>
+                    }
                   </a>
                 </li>
               </ul>

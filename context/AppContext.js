@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import errorHandler from '../components/ErrorHandler'
 import { studentAddress, studentABI } from "./constants";
 import { showToast } from "../components/Toaster";
+import Login from '../pages/authScreens/loginScreen'
 const fetchContract = (signerOrProvider) =>
   new ethers.Contract(studentAddress, studentABI, signerOrProvider);
 export const AppContext = React.createContext();
@@ -18,11 +19,18 @@ export const AppProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [error, setError] = useState("");
   useEffect(() => {
+    const localToken = localStorage.getItem("token")
+    if(localToken){
+      setToken(localToken)
+    }else setToken(null)
+  }, [token])
+  useEffect(() => {
     getStudents();
   }, [studentAdd]);
   useEffect(() => {
     connectWallet();
   }, [currentAccount]);
+  
   const errorMap = {
     "invalid BigNumber string":
       "Oops! The number you entered is not valid. Please enter a valid number and try again.",
@@ -274,7 +282,7 @@ export const AppProvider = ({ children }) => {
         setError,
       }}
     >
-      {children}
+      { token ? children : <Login />}
     </AppContext.Provider>
   );
 };
